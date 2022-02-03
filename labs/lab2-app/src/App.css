@@ -1,0 +1,26 @@
+.extra {
+  font-size: 16px;
+  inline-size: 100px;
+  overflow-wrap: break-word;
+  /* width: 120px; */
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+.gray-extra {
+  /* background-color: var(--bg-secondary); */
+  background-color: #6c757d;
+}
+.green-extra {
+  /* background-color: var(--bg-primary); */
+  background-color: #198754;
+  border: solid 1px;
+}
