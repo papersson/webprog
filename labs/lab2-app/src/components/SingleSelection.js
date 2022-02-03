@@ -2,7 +2,6 @@ import { Component } from 'react'
 
 class SingleSelection extends Component {
   render() {
-    // console.log(this.props)
     const { name, items, changeHandler, value } = this.props
     return (
       <label>

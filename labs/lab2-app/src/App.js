@@ -7,14 +7,12 @@ import Salad from './Salad'
 import { Component } from 'react'
 
 class App extends Component {
-  //   let extras = Object.keys(inventory).filter(name => inventory[name].extra)
   constructor(props) {
     super(props)
     this.state = { cart: [] }
-    this.submitHandler = this.submitHandler.bind(this)
   }
 
-  submitHandler(event, ingredients) {
+  submitForm(event, ingredients) {
     event.preventDefault()
     const newSalad = new Salad()
     for (const ingredient of ingredients) {
@@ -24,7 +22,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log(this.state)
     return (
       <div className='container py-4'>
         <header className='pb-3 mb-4 border-bottom'>
@@ -33,7 +30,7 @@ class App extends Component {
 
         <ComposeSalad
           inventory={inventory}
-          submitHandler={this.submitHandler}
+          submitForm={(e, ingredients) => this.submitForm(e, ingredients)}
         />
 
         {this.state.cart.length !== 0 ? (

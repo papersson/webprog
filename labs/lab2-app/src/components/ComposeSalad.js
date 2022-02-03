@@ -5,12 +5,18 @@ import Extras from './Extras'
 class ComposeSalad extends Component {
   constructor(props) {
     super(props)
-    this.submitForm = this.props.submitHandler
     this.state = { foundation: '', protein: '', dressing: '', extras: {} }
-    this.handleFoundation = this.handleFoundation.bind(this)
-    this.handleProtein = this.handleProtein.bind(this)
-    this.handleDressing = this.handleDressing.bind(this)
-    this.handleExtras = this.handleExtras.bind(this)
+
+    // Extract items from inventory
+    const inventory = props.inventory
+    this.extras = Object.keys(inventory).filter(key => inventory[key].extra)
+    this.foundations = Object.keys(inventory).filter(
+      key => inventory[key].foundation
+    )
+    this.proteins = Object.keys(inventory).filter(key => inventory[key].protein)
+    this.dressings = Object.keys(inventory).filter(
+      key => inventory[key].dressing
+    )
   }
 
   handleExtras(event) {
@@ -33,59 +39,48 @@ class ComposeSalad extends Component {
     this.setState({ ...this.state, dressing: event.target.value })
   }
 
-  submitAndReset(event, ingredients) {
-    this.submitForm(event, ingredients)
+  submitAndReset(event, selectedIngredients) {
+    this.props.submitForm(event, selectedIngredients)
     this.setState({ foundation: '', protein: '', dressing: '', extras: {} })
   }
 
   render() {
-    const inventory = this.props.inventory
     const singleSelections = Object.values(this.state).slice(0, -1)
     const selectedExtras = Object.keys(this.state.extras).filter(
       key => this.state.extras[key]
     )
     const selectedIngredients = singleSelections.concat(selectedExtras)
 
-    const extras = Object.keys(inventory).filter(key => inventory[key].extra)
-    const foundations = Object.keys(inventory).filter(
-      key => inventory[key].foundation
-    )
-    const proteins = Object.keys(inventory).filter(
-      key => inventory[key].protein
-    )
-    const dressings = Object.keys(inventory).filter(
-      key => inventory[key].dressing
-    )
     return (
       <div className='container col-12'>
         <div className='row h-200 p-5 bg-light border rounded-3'>
           <form
             onSubmit={event => this.submitAndReset(event, selectedIngredients)}
           >
-            <h2 className='text-center'>Välj innehållet i din sallad</h2>
+            {/* <h2 className='text-center'>Select salad ingredients</h2> */}
             <div className='d-flex justify-content-between mt-4 mb-4'>
               <SingleSelection
                 name='foundation'
-                items={foundations}
-                changeHandler={this.handleFoundation}
+                items={this.foundations}
+                changeHandler={e => this.handleFoundation(e)}
                 value={this.state.foundation}
               />
               <SingleSelection
                 name='protein'
-                items={proteins}
-                changeHandler={this.handleProtein}
+                items={this.proteins}
+                changeHandler={e => this.handleProtein(e)}
                 value={this.state.protein}
               />
               <SingleSelection
                 name='dressing'
-                items={dressings}
-                changeHandler={this.handleDressing}
+                items={this.dressings}
+                changeHandler={e => this.handleDressing(e)}
                 value={this.state.dressing}
               />
             </div>
             <Extras
-              items={extras}
-              handleExtras={this.handleExtras}
+              items={this.extras}
+              handleExtras={e => this.handleExtras(e)}
               extras={this.state.extras}
             />
             <div className='col d-flex justify-content-center mt-4'>

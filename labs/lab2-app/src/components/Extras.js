@@ -4,17 +4,7 @@ class Extras extends Component {
   constructor(props) {
     super(props)
     this.state = {}
-    // this.clickHandler = this.clickHandler.bind(this)
   }
-
-  // clickHandler(event, modifyExtras) {
-  //   const extra = event.target.textContent
-  //   const newState = { ...this.state }
-  //   const newValue = !newState[extra]
-  //   newState[extra] = newValue
-  //   this.setState(newState)
-  //   modifyExtras(newState)
-  // }
 
   render() {
     const { items, handleExtras, extras } = this.props
