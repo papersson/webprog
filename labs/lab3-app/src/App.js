@@ -15,6 +15,7 @@ class App extends Component {
 
   submitForm(event, ingredients) {
     event.preventDefault()
+    // event.target.classList.add('was-validated')
     const newSalad = new Salad()
     for (const ingredient of ingredients) {
       newSalad.add(ingredient, inventory[ingredient])
@@ -109,11 +110,13 @@ const Footer = () => {
 
 const Navbar = () => {
   return (
-    <ul className='nav nav-tabs'>
+    <ul className='nav nav-tabs list-group-horizontal'>
       <li className='nav-item'>
         <Link className='nav-link' to='/compose-salad'>
           Compose salad
         </Link>
+      </li>
+      <li className='nav-item'>
         <Link className='nav-link' to='/view-cart'>
           View cart
         </Link>

@@ -6,6 +6,7 @@ class ComposeSalad extends Component {
   constructor(props) {
     super(props)
     this.state = { foundation: '', protein: '', dressing: '', extras: {} }
+    this.validated = false
 
     // Extract items from inventory
     const inventory = props.inventory
@@ -25,24 +26,33 @@ class ComposeSalad extends Component {
     const newValue = !newExtras[extra]
     newExtras[extra] = newValue
     this.setState({ ...this.state, extras: newExtras })
+    // event.target.parentElement.classList.add('was-validated')
   }
 
   handleFoundation(event) {
     this.setState({ ...this.state, foundation: event.target.value })
+    event.target.parentElement.classList.add('was-validated')
   }
 
   handleProtein(event) {
     this.setState({ ...this.state, protein: event.target.value })
+    event.target.parentElement.classList.add('was-validated')
   }
 
   handleDressing(event) {
     this.setState({ ...this.state, dressing: event.target.value })
+    event.target.parentElement.classList.add('was-validated')
   }
 
   submitAndReset(event, selectedIngredients) {
-    this.props.submitForm(event, selectedIngredients)
-    this.setState({ foundation: '', protein: '', dressing: '', extras: {} })
-    this.props.navigate('/view-cart')
+    event.preventDefault()
+    event.target.classList.add('was-validated')
+    if (event.target.checkValidity() === true) {
+      this.validated = true
+      this.props.submitForm(event, selectedIngredients)
+      this.setState({ foundation: '', protein: '', dressing: '', extras: {} })
+      this.props.navigate('/view-cart')
+    }
   }
 
   render() {
@@ -56,7 +66,9 @@ class ComposeSalad extends Component {
       <div className='container col-12'>
         <div className='row h-200 p-5 bg-light border rounded-3'>
           <form
+            className='needs-validation'
             onSubmit={event => this.submitAndReset(event, selectedIngredients)}
+            noValidate
           >
             {/* <h2 className='text-center'>Select salad ingredients</h2> */}
             <div className='d-flex justify-content-between mt-4 mb-4'>
@@ -85,9 +97,8 @@ class ComposeSalad extends Component {
               extras={this.state.extras}
             />
             <div className='col d-flex justify-content-center mt-4'>
-              <input
+              <button
                 type='submit'
-                value='Submit'
                 className='btn btn-primary btn-lg'
                 // disabled={
                 //   !(
@@ -96,7 +107,9 @@ class ComposeSalad extends Component {
                 //     this.state.dressing
                 //   )
                 // }
-              />
+              >
+                Submit{' '}
+              </button>
             </div>
           </form>
         </div>

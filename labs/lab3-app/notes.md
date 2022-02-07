@@ -12,19 +12,3 @@
   <Link to="/compose-salad">. Try it, look in the browser url field.
 
   - No difference?
-
-- **Reflection question 4:** What triggers react to call the render function and update the DOM?
-
-  - State changes (setState) or property changes.
-
-- **Reflection question 5:**: When the user changes the HTML form state, does this change the state of the component?
-
-  - Yes, callback functions will change the component state based on the form state.
-
-- **Reflection question 6:**: What is the value of this in the event handling call-back functions?
-
-  - The Component object (due to binding).
-
-- **Reflection question 7:**: How is the prototype chain affected when copying an object with copy = {...sourceObject}?
-
-  - The prototype chain is not copied, so inherited properties will be gone.
