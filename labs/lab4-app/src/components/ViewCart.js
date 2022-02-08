@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { postOrder } from '../services/inventory.js'
+import Salad from '../Salad.js'
 
 class ViewCart extends Component {
   constructor(props) {
@@ -27,7 +28,9 @@ class ViewCart extends Component {
     postOrder('http://localhost:8080/orders', data).then(d => {
       const order = toState(d)
       this.setState({ order: order })
+      // localStorage.setItem('cart', JSON.stringify([]))
     })
+    this.props.resetCart()
   }
 
   render() {
@@ -52,12 +55,13 @@ class ViewCart extends Component {
             <>
               {this.cart.map(salad => (
                 <div
-                  key={salad.uuid()}
+                  key={salad.uuid}
                   className='bg-light border-top border-grey p-3 mx-5 text-center'
                 >
                   {printIngredients(salad)}
                   <br />
-                  Price: {salad.getPrice()}
+                  {/* Price: {salad.getPrice()} */}
+                  Price: {Salad.prototype.getPrice.call(salad)}
                 </div>
               ))}
               <div className='col d-flex justify-content-center mt-4'>

@@ -6,7 +6,6 @@ class ComposeSalad extends Component {
   constructor(props) {
     super(props)
     this.state = { foundation: '', protein: '', dressing: '', extras: {} }
-    this.validated = false
 
     // Extract items from inventory
     const inventory = props.inventory
@@ -48,7 +47,6 @@ class ComposeSalad extends Component {
     event.preventDefault()
     event.target.classList.add('was-validated')
     if (event.target.checkValidity() === true) {
-      this.validated = true
       this.props.addSalad(event, selectedIngredients)
       this.setState({ foundation: '', protein: '', dressing: '', extras: {} })
       this.props.navigate('/view-cart')

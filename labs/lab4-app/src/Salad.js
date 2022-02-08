@@ -1,10 +1,8 @@
+import { v4 as uuidv4 } from 'uuid'
 class Salad {
   static counter = 0
   constructor() {
-    const _uuid = `salad_${Salad.counter++}`
-    this.uuid = function () {
-      return _uuid
-    }
+    this.uuid = uuidv4()
     this.ingredients = {}
   }
   add(name, properties) {

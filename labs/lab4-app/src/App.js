@@ -11,7 +11,12 @@ import { Link, Routes, Route, useParams } from 'react-router-dom'
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { cart: [], inventory: {} }
+    // this.state = { cart: [], inventory: {} }
+    this.state = {
+      cart: JSON.parse(localStorage.getItem('cart')) || [],
+      inventory: {},
+    }
+    this.resetCart = this.resetCart.bind(this)
   }
 
   async componentDidMount() {
@@ -24,13 +29,25 @@ class App extends Component {
     }
   }
 
+  resetCart() {
+    this.setState({ ...this.state, cart: [] })
+    localStorage.removeItem('cart')
+  }
+
   addSalad(event, ingredients) {
     event.preventDefault()
     const newSalad = new Salad()
     for (const ingredient of ingredients) {
       newSalad.add(ingredient, this.state.inventory[ingredient])
     }
-    this.setState({ cart: [...this.state.cart, newSalad] })
+    localStorage.setItem('cart', JSON.stringify([...this.state.cart, newSalad]))
+    this.setState({
+      ...this.state,
+      cart: JSON.parse(localStorage.getItem('cart')),
+    })
+    console.log(this.state)
+    // localStorage.setItem('cart', JSON.stringify([...this.state.cart, newSalad]))
+    // Reflection question: in this case most convenient with option 4.
   }
 
   render() {
@@ -58,7 +75,12 @@ class App extends Component {
             />
           }
         />
-        <Route path='view-cart' element={<ViewCart cart={this.state.cart} />} />
+        <Route
+          path='view-cart'
+          element={
+            <ViewCart cart={this.state.cart} resetCart={this.resetCart} />
+          }
+        />
         <Route path='*' element={<Error />} />
         <Route
           path='view-ingredient/:ingredient'
