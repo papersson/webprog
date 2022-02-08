@@ -25,21 +25,10 @@ class ComposeSalad extends Component {
     const newValue = !newExtras[extra]
     newExtras[extra] = newValue
     this.setState({ ...this.state, extras: newExtras })
-    // event.target.parentElement.classList.add('was-validated')
   }
 
-  handleFoundation(event) {
-    this.setState({ ...this.state, foundation: event.target.value })
-    event.target.parentElement.classList.add('was-validated')
-  }
-
-  handleProtein(event) {
-    this.setState({ ...this.state, protein: event.target.value })
-    event.target.parentElement.classList.add('was-validated')
-  }
-
-  handleDressing(event) {
-    this.setState({ ...this.state, dressing: event.target.value })
+  handleSingleSelection(event, name) {
+    this.setState({ ...this.state, [name]: event.target.value })
     event.target.parentElement.classList.add('was-validated')
   }
 
@@ -73,19 +62,19 @@ class ComposeSalad extends Component {
               <SingleSelection
                 name='foundation'
                 items={this.foundations}
-                changeHandler={e => this.handleFoundation(e)}
+                changeHandler={e => this.handleSingleSelection(e, 'foundation')}
                 value={this.state.foundation}
               />
               <SingleSelection
                 name='protein'
                 items={this.proteins}
-                changeHandler={e => this.handleProtein(e)}
+                changeHandler={e => this.handleSingleSelection(e, 'protein')}
                 value={this.state.protein}
               />
               <SingleSelection
                 name='dressing'
                 items={this.dressings}
-                changeHandler={e => this.handleDressing(e)}
+                changeHandler={e => this.handleSingleSelection(e, 'dressing')}
                 value={this.state.dressing}
               />
             </div>
@@ -95,17 +84,7 @@ class ComposeSalad extends Component {
               extras={this.state.extras}
             />
             <div className='col d-flex justify-content-center mt-4'>
-              <button
-                type='submit'
-                className='btn btn-primary btn-lg'
-                // disabled={
-                //   !(
-                //     this.state.foundation &&
-                //     this.state.protein &&
-                //     this.state.dressing
-                //   )
-                // }
-              >
+              <button type='submit' className='btn btn-primary btn-lg'>
                 Submit
               </button>
             </div>
