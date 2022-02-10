@@ -20,13 +20,15 @@ const fetchCategory = (category, inventory) => {
   })
 }
 
-async function fetchAll(inventory) {
+async function fetchAll() {
+  let inventory = {}
   await Promise.all([
     fetchCategory('foundations', inventory),
     fetchCategory('proteins', inventory),
     fetchCategory('extras', inventory),
     fetchCategory('dressings', inventory),
   ])
+  return inventory
 }
 
 async function postOrder(url = '', data = []) {

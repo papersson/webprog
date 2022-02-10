@@ -6,17 +6,6 @@ class ComposeSalad extends Component {
   constructor(props) {
     super(props)
     this.state = { foundation: '', protein: '', dressing: '', extras: {} }
-
-    // Extract items from inventory
-    const inventory = props.inventory
-    this.extras = Object.keys(inventory).filter(key => inventory[key].extra)
-    this.foundations = Object.keys(inventory).filter(
-      key => inventory[key].foundation
-    )
-    this.proteins = Object.keys(inventory).filter(key => inventory[key].protein)
-    this.dressings = Object.keys(inventory).filter(
-      key => inventory[key].dressing
-    )
   }
 
   handleExtras(event) {
@@ -43,6 +32,17 @@ class ComposeSalad extends Component {
   }
 
   render() {
+    // Extract items from inventory
+    const inventory = this.props.inventory
+    let extras = Object.keys(inventory).filter(key => inventory[key].extra)
+    let foundations = Object.keys(inventory).filter(
+      key => inventory[key].foundation
+    )
+    let proteins = Object.keys(inventory).filter(key => inventory[key].protein)
+    let dressings = Object.keys(inventory).filter(
+      key => inventory[key].dressing
+    )
+
     const singleSelections = Object.values(this.state).slice(0, -1)
     const selectedExtras = Object.keys(this.state.extras).filter(
       key => this.state.extras[key]
@@ -61,25 +61,25 @@ class ComposeSalad extends Component {
             <div className='d-flex justify-content-between mt-4 mb-4'>
               <SingleSelection
                 name='foundation'
-                items={this.foundations}
+                items={foundations}
                 changeHandler={e => this.handleSingleSelection(e, 'foundation')}
                 value={this.state.foundation}
               />
               <SingleSelection
                 name='protein'
-                items={this.proteins}
+                items={proteins}
                 changeHandler={e => this.handleSingleSelection(e, 'protein')}
                 value={this.state.protein}
               />
               <SingleSelection
                 name='dressing'
-                items={this.dressings}
+                items={dressings}
                 changeHandler={e => this.handleSingleSelection(e, 'dressing')}
                 value={this.state.dressing}
               />
             </div>
             <Extras
-              items={this.extras}
+              items={extras}
               handleExtras={e => this.handleExtras(e)}
               extras={this.state.extras}
             />

@@ -17,16 +17,20 @@ class App extends Component {
       inventory: {},
     }
     this.resetCart = this.resetCart.bind(this)
+    this.updateInventory = this.updateInventory.bind(this)
   }
 
   async componentDidMount() {
     try {
-      let initialInventory = {}
-      await fetchAll(initialInventory)
+      let initialInventory = await fetchAll(this.updateInventory)
       this.setState({ ...this.state, inventory: initialInventory })
     } catch (error) {
       console.log(error)
     }
+  }
+
+  updateInventory(initialInventory) {
+    this.setState({ ...this.state, inventory: initialInventory })
   }
 
   resetCart() {
