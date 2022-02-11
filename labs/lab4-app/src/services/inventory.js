@@ -14,8 +14,11 @@ const fetchIngredient = (category, ingredient) => {
 
 const fetchCategory = (category, inventory) => {
   return safeFetch(`${url}/${category}`).then(async ingredients => {
-    for (const ingredient of ingredients) {
-      inventory[ingredient] = await fetchIngredient(category, ingredient)
+    let data = await Promise.all(
+      ingredients.map(ingredient => fetchIngredient(category, ingredient))
+    )
+    for (let i = 0; i < ingredients.length; i++) {
+      inventory[ingredients[i]] = data[i]
     }
   })
 }
